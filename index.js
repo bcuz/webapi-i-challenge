@@ -1,11 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 
 const db = require('./data/db');
 
 const server = express();
-// const { hubs } = db;
 
 server.use(express.json());
+server.use(cors())
 
 server.get('/', (req,res) => {
 
@@ -71,7 +72,7 @@ server.put('/api/users/:id', (req, res) => {
   }  
 
   db.update(id, req.body)
-  .then(updateUser => {
+  .then(updateUser => {    
     
       if(updateUser) {
         res.status(200).res.json(updateUser)
@@ -95,7 +96,8 @@ server.delete('/api/users/:id', (req, res) => {
     } else {
       res.status(404).json({ error: "The user with the specified ID does not exist." })
     }
-  })
+  }).then(() => console.log(id)
+  )
   .catch(() => {
       res.status(500).json({ error: "The user could not be removed" })
   })
