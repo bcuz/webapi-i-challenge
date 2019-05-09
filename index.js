@@ -42,6 +42,22 @@ server.get('/api/users/:id', (req, res, next) => {
 
 })
 
+server.post('/api/users', (req,res) => {
+    
+  const newUser = req.body
+
+  db.insert(newUser)
+  .then(addedUser =>{
+    
+     res.status(201).json(addedUser);
+  })
+  .catch(() => {
+    // not erroring when bio is missing
+      res.status(400).json({ errorMessage: "Please provide name and bio for the user." })
+  })
+
+})
+
 server.listen(5001, () => {
   console.log('Server is listening');
 })
