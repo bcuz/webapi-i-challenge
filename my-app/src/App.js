@@ -12,7 +12,7 @@ class App extends Component {
   componentDidMount() {
     axios
     .get('http://localhost:5001/api/users')
-    .then(response => this.setState({users: response.data}))
+    .then(res => this.setState({users: res.data}))
     .catch(err => console.log(err));
   }
 

@@ -23,7 +23,7 @@ server.get('/api/users', (req,res) => {
   })
 })
 
-server.get('/api/users/:id', (req, res, next) => {
+server.get('/api/users/:id', (req, res) => {
   const { id } = req.params;
   
   db.findById(id)
@@ -75,7 +75,7 @@ server.put('/api/users/:id', (req, res) => {
   .then(updateUser => {    
     
       if(updateUser) {
-        res.status(200).res.json(updateUser)
+        res.status(200).json(updateUser)
       } else {
         res.status(404).json({ error: "The user with the specified ID does not exist." })        
       }
