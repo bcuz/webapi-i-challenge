@@ -30,15 +30,14 @@ server.get('/api/users/:id', (req, res, next) => {
 
     if (user) {
       res.json(user)
+    } else {
+      res.status(404).json({ error: "The user with the specified ID does not exist." })
     }
-
-    // not sure if the best way
-    next(new Error("The user with the specified ID does not exist."))
     
   })
-  // .catch((err) => {    
-  //     res.status(404).json({ message: err })
-  // })
+  .catch(() => {    
+      res.status(500).json({ error: "The user information could not be retrieved." })
+  })
 
 })
 
