@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import logo from './logo.svg';
+import Form from './components/Form';
 import './App.css';
 
 class App extends Component {
@@ -10,6 +11,10 @@ class App extends Component {
   // add any needed code to ensure that the users collection exists on state and it has data coming from the server
 
   componentDidMount() {
+    this.fetchUsers()
+  }
+
+  fetchUsers = () => {
     axios
     .get('http://localhost:5001/api/users')
     .then(res => this.setState({users: res.data}))
@@ -22,6 +27,7 @@ class App extends Component {
         <ul>
           {this.state.users.map(user => <li>{user.name}</li> )}
         </ul>
+        <Form fetchUsers={this.fetchUsers}  />
       </div>
     );
 
