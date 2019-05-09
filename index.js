@@ -44,15 +44,19 @@ server.get('/api/users/:id', (req, res, next) => {
 server.post('/api/users', (req,res) => {
     
   const newUser = req.body
+  let { name, bio } = req.body;
+
+  if (!name || !bio) {
+    return res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
+  }
 
   db.insert(newUser)
   .then(addedUser =>{
+      res.status(201).json(addedUser);
     
-     res.status(201).json(addedUser);
   })
   .catch(() => {
-    // not erroring when bio is missing
-      res.status(400).json({ errorMessage: "Please provide name and bio for the user." })
+      res.status(500).json({ error: "There was an error while saving the user to the database" })
   })
 
 })
