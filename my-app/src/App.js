@@ -21,11 +21,24 @@ class App extends Component {
     .catch(err => console.log(err));
   }
 
+  deleteItem = id => {
+    axios
+      .delete(`http://localhost:5001/api/users/${id}`)
+      .then(res => {
+        this.fetchUsers()              
+      })
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div className="App">
         <ul>
-          {this.state.users.map(user => <li>{user.name}</li> )}
+          {this.state.users.map(user => {
+            
+            return <li><button onClick={() => this.deleteItem(user.id)}>X</button> {user.name}</li>
+            
+            } )}
         </ul>
         <Form fetchUsers={this.fetchUsers}  />
       </div>
