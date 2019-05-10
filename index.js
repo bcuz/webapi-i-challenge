@@ -73,12 +73,24 @@ server.put('/api/users/:id', (req, res) => {
 
   db.update(id, req.body)
   .then(updateUser => {    
-    
-      if(updateUser) {
-        res.status(200).json(updateUser)
-      } else {
-        res.status(404).json({ error: "The user with the specified ID does not exist." })        
-      }
+
+    if(updateUser) {
+      db.findById(id)
+        .then(user => {
+
+          if (user) {
+            res.json(user)
+          } else {
+            res.status(404).json({ error: "The user with the specified ID does not exist." })
+          }
+          
+        })
+        .catch(() => {    
+            res.status(500).json({ error: "The user information could not be retrieved." })
+        })
+    } else {
+        res.status(404).json({ error: "The user with the specified ID does not exist." })       
+    }
   })
   .catch(() => {
     res.status(500).json({error: "The user information could not be modified." })
