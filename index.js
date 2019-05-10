@@ -25,7 +25,7 @@ server.get('/api/users', (req,res) => {
 
 server.get('/api/users/:id', (req, res) => {
   const { id } = req.params;
-  
+
   db.findById(id)
   .then(user => {
 
@@ -100,18 +100,30 @@ server.put('/api/users/:id', (req, res) => {
 server.delete('/api/users/:id', (req, res) => {
   const { id } = req.params;
 
-  db.remove(id)
-  .then(removeUser => {    
+  db.findById(id)
+  .then(user => {
 
-    if (removeUser) {
-      res.json(removeUser)
+    if (user) {
+      
+      db.remove(id)
+      .then(removeUser => {    
+
+        if (removeUser) {
+          res.json(user)
+        } else {
+          res.status(404).json({ error: "The user with the specified ID does not exist." })
+        }
+      })
+      .catch(() => {
+          res.status(500).json({ error: "The user could not be removed" })
+      })      
     } else {
       res.status(404).json({ error: "The user with the specified ID does not exist." })
     }
-  }).then(() => console.log(id)
-  )
-  .catch(() => {
-      res.status(500).json({ error: "The user could not be removed" })
+    
+  })
+  .catch(() => {    
+      res.status(500).json({ error: "The user information could not be retrieved." })
   })
 
 })
