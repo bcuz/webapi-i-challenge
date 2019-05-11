@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux'
+import {getUsers} from "./actions";
 import logo from './logo.svg';
 import Form from './components/Form';
 import './App.css';
@@ -12,7 +14,7 @@ class App extends Component {
   // add any needed code to ensure that the users collection exists on state and it has data coming from the server
 
   componentDidMount() {
-    this.fetchUsers()
+    this.props.getUsers()
   }
 
   fetchUsers = () => {
@@ -37,8 +39,10 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.deleted && <p>Deleted {this.state.deleted} </p> }
+
+        {this.props.fetchingData && <p>Loading...</p>}
         <ul>
-          {this.state.users.map(user => {
+          {this.props.users.map(user => {
             
             return <li><button onClick={() => this.deleteItem(user.id)}>X</button> {user.name}</li>
             
@@ -52,4 +56,8 @@ class App extends Component {
 
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { users: state.users, fetchingData: state.fetchingData}
+}
+
+export default connect(mapStateToProps, {getUsers})(App);
