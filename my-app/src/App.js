@@ -6,7 +6,8 @@ import './App.css';
 
 class App extends Component {
   state = {
-    users: []    
+    users: [],
+    deleted: ''
   }
   // add any needed code to ensure that the users collection exists on state and it has data coming from the server
 
@@ -25,6 +26,8 @@ class App extends Component {
     axios
       .delete(`http://localhost:5001/api/users/${id}`)
       .then(res => {
+        this.setState({deleted: res.data.name})
+        
         this.fetchUsers()              
       })
       .catch(err => console.log(err));
@@ -33,6 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        {this.state.deleted && <p>Deleted {this.state.deleted} </p> }
         <ul>
           {this.state.users.map(user => {
             
