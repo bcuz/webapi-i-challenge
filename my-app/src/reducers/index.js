@@ -1,10 +1,13 @@
 import { 
+  DELETE_FRIEND_START,
+  DELETE_FRIEND_SUCCESS,
    FETCH_DATA_SUCCESS,
    FETCH_DATA_START,} from "../actions";
 
 const defaults = {
   users: [],
   fetchingData: false,
+  // delName: null
 }
 
 const rootReducer = (state = defaults, action) => {
@@ -15,13 +18,24 @@ const rootReducer = (state = defaults, action) => {
         // error: "",
         fetchingData: true
       };
-    case FETCH_DATA_SUCCESS:
+      case FETCH_DATA_SUCCESS:
       // console.log(action.payload);
       return {
         ...state,
         // error: "",
         fetchingData: false,
         users: action.users
+      };
+      case DELETE_FRIEND_START:
+        return {
+          ...state,
+          // error: "",
+          delName: null
+        };
+    case DELETE_FRIEND_SUCCESS:
+      return {
+        ...state,        
+        delName: action.delName
       };
     default:
       return state;
