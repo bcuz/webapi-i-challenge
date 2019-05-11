@@ -17,20 +17,13 @@ class App extends Component {
     this.props.getUsers()
   }
 
-  fetchUsers = () => {
-    axios
-    .get('http://localhost:5001/api/users')
-    .then(res => this.setState({users: res.data}))
-    .catch(err => console.log(err));
-  }
-
   deleteItem = id => {
     axios
       .delete(`http://localhost:5001/api/users/${id}`)
       .then(res => {
         this.setState({deleted: res.data.name})
         
-        this.fetchUsers()              
+        this.props.getUsers()              
       })
       .catch(err => console.log(err));
   };
@@ -48,7 +41,7 @@ class App extends Component {
             
             } )}
         </ul>
-        <Form fetchUsers={this.fetchUsers}  />
+        <Form />
       </div>
     );
 

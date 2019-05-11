@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux'
+import {getUsers} from "../actions";
 
 class Form extends Component {
   state = {
@@ -16,7 +18,7 @@ class Form extends Component {
         // res.data has all the proper work
         // done on it from the server.
         // this.props.updateItems(res.data);
-        this.props.fetchUsers()
+        this.props.getUsers()
         
       })
       .catch(err => console.log(err));
@@ -48,4 +50,4 @@ class Form extends Component {
   }
 }
 
-export default Form;
+export default connect(null, {getUsers})(Form);
