@@ -1,5 +1,6 @@
 # Logs
 data/lambda.db3
+/my-app
 note
 logs
 *.log
