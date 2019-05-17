@@ -1,3 +1,5 @@
+require('dotenv').config(); // add this line as the first thing to run1
+const port = process.env.PORT || 5000;
 const express = require('express');
 const cors = require('cors');
 
@@ -124,6 +126,6 @@ server.delete('/api/users/:id', async (req, res) => {
   }
 })
 
-server.listen(5001, () => {
-  console.log('Server is listening');
-})
+server.listen(port, () => {
+  console.log(`\n*** Server Running on http://localhost:${port} ***\n`);
+});
