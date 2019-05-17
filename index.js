@@ -1,11 +1,11 @@
 require('dotenv').config(); // add this line as the first thing to run1
-const port = process.env.PORT || 5000;
 const express = require('express');
 const cors = require('cors');
 
 const db = require('./data/db');
 
 const server = express();
+const port = process.env.PORT || 5000;
 
 server.use(express.json());
 server.use(cors())
